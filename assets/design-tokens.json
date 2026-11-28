@@ -1,0 +1,27 @@
+{
+  "_about": "Original Pocket Oasis prototype palette. Mirrored in game/world_data.gd; test_project.py checks consistency. Not sampled from a reference game.",
+  "color": {
+    "text": "#203f39",
+    "text-muted": "#526d63",
+    "bg": "#fff9e9",
+    "surface": "#f4efdd",
+    "accent": "#215d4a",
+    "on-accent": "#fff9e9",
+    "danger": "#953f37",
+    "focus-on-accent": "#edb45b"
+  },
+  "pairs": [
+    ["text", "bg"],
+    ["text", "surface"],
+    ["text-muted", "bg"],
+    ["on-accent", "accent"],
+    ["danger", "bg"],
+    ["accent", "bg", "ui"],
+    ["focus-on-accent", "accent", "ui"]
+  ],
+  "font": {"arabic": "Noto Sans Arabic, SIL OFL 1.1"},
+  "type": {"caption": 14, "body": 19, "section": 23, "title": 30},
+  "space": [8, 10, 16, 20, 24, 32],
+  "radius": {"button": 16, "panel": 20},
+  "viewport": {"width": 1280, "height": 720, "orientation": "landscape"}
+}

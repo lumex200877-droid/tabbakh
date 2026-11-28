@@ -1,0 +1,2 @@
+# Optional static GDScript parsing, linting, and formatting (not needed to play).
+gdtoolkit==4.3.4

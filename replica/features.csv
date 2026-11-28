@@ -1,0 +1,24 @@
+feature,area,priority,original,clone,notes
+Third-person movement and touch camera,controls,must,unknown,partial,Proposed Android control scheme; source interactions not observed; game/main.gd and virtual_stick.gd; source only; engine/device tests pending
+Explore one original bounded region,world,must,yes,partial,Exploration advertised in store; one region is our reduced scope; game/world_art.gd; original small island; not runtime-verified
+Gather wood and stone,resources,must,yes,partial,Advertised in store; quantities and timings unknown; game/island_state.gd; 12 trees and 8 rocks; engine tests pending
+Inventory with capacity rules,inventory,must,unknown,partial,Proposed supporting system; original UI not observed; Counters and list; per-item capacity 999; no drag/drop; runtime pending
+Craft tools and building pieces,crafting,must,yes,partial,Crafting advertised; recipes will be original; Only plank recipe implemented in source; no tools or recipe tree yet
+Grid placement rotation and collision checks,building,must,unknown,partial,Proposed implementation of advertised construction; Three pieces with preview and blockers; no demolition; runtime pending
+Plant water and harvest crops,farming,must,yes,partial,Farming advertised; watering rules unverified; Four fixed plots and 30 active-play seconds after watering; runtime pending
+Atomic versioned local save and recovery,persistence,must,unknown,partial,Proposed reliability requirement; prototype only; game/save_store.gd; backup and validation; engine tests written but not run
+Android performance and thermal test gates,quality,must,unknown,no,Our acceptance gates; no source performance benchmark
+Original Arabic and English interface,accessibility,must,unknown,partial,Proposed differentiation; source language support unverified; Arabic UI and English working subtitle only; no locale switch; layout unverified
+Original licensed art music names and world,brand,must,unknown,partial,Our legal and production requirement; Original procedural shapes and OFL Arabic font; no music; name not cleared
+Day and night visual cycle,world,should,yes,no,Day and night described in store; gameplay effects unverified
+Guided goals and progression,progression,should,unknown,partial,Proposed structure; original progression unobserved; Three simple HUD goals only; no map or progression system; runtime pending
+One companion for farming assistance,companions,should,yes,no,Pet assistance advertised; single companion is reduced scope
+Simple original combat prototype,combat,could,yes,no,Combat advertised; defer pending core loop validation
+Private cooperative sessions for 2 to 4 players,multiplayer,should,unknown,no,Cooperation advertised; proposed player cap is not a source fact
+Account recovery and deletion,account,should,unknown,no,Required in our plan before production accounts
+Server-authoritative inventory and building,multiplayer,should,unknown,no,Proposed anti-cheat requirement for online phase
+Fixed-price cosmetic purchases,business,could,unknown,no,Proposed model only; requires user approval and billing policy review
+Public text chat,social,could,unknown,skip,Excluded from initial release due to moderation and safety burden
+Massively multiplayer persistent shared world,multiplayer,could,unknown,skip,Not inferred from store; excluded from initial commercial release
+Copy original maps characters assets code and text,legal,could,unknown,skip,Proprietary content excluded; all implementation and identity must be original
+Use original private services or player network,legal,could,unknown,skip,No access or authorization; build our own services later
