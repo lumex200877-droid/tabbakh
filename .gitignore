@@ -1,0 +1,31 @@
+# Godot imports and local editor state
+.godot/
+*.tmp
+*.log
+# Exports, SDKs, credentials, generated downloads
+/build/
+/dist/
+/downloads/
+/tools/
+*.apk
+*.aab
+*.pck
+*.keystore
+*.jks
+export_credentials.cfg
+.env
+.env.*
+!.env.example
+# Python tooling
+.venv/
+__pycache__/
+.pytest_cache/
+# Browser preview dependencies and test output
+node_modules/
+/playwright-report/
+/test-results/
+
+.cache/
+
+# Downloaded visual references are research-only, not distributable game assets
+/image-search/

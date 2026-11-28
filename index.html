@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#215d4a" />
+  <meta name="description" content="واحة صغيرة: تجربة لعب أصلية، اجمع وازرع وابنِ من متصفحك." />
+  <title>واحة صغيرة — واديك، على مهلك</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22><rect width=%2264%22 height=%2264%22 rx=%2220%22 fill=%22%23215d4a%22/><text x=%2232%22 y=%2245%22 text-anchor=%22middle%22 font-size=%2240%22>🌱</text></svg>" />
+</head>
+<body>
+  <canvas id="world" aria-label="عالم واحة صغيرة ثلاثي الأبعاد"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <header class="topbar">
+    <div class="brand"><span class="brand-mark"><i data-lucide="sprout"></i></span><div><h1>واحة صغيرة<span class="brand-dot">.</span></h1><span class="eyebrow">POCKET OASIS</span></div></div>
+    <div class="session-badge"><span class="live-dot"></span>واديك، على مهلك<span class="badge-separator">/</span><span>تجربة متصفح</span></div>
+    <div class="top-actions"><button class="icon-button" id="fullscreen" title="ملء الشاشة" aria-label="ملء الشاشة"><i data-lucide="maximize"></i></button><button class="icon-button" id="sound" title="تشغيل الصوت" aria-label="تشغيل الصوت"><i data-lucide="volume-x"></i></button><button class="icon-button" id="settings" title="القائمة والمساعدة" aria-label="القائمة والمساعدة"><i data-lucide="settings-2"></i></button></div>
+  </header>
+  <section class="resources" aria-label="الموارد">
+    <div class="resource" data-item="wood"><span class="resource-icon wood"><i data-lucide="tree-pine"></i></span><span class="resource-name">خشب</span><b id="count-wood">0</b></div>
+    <div class="resource" data-item="stone"><span class="resource-icon stone"><i data-lucide="mountain"></i></span><span class="resource-name">حجر</span><b id="count-stone">0</b></div>
+    <div class="resource" data-item="plank"><span class="resource-icon plank"><i data-lucide="layers"></i></span><span class="resource-name">ألواح</span><b id="count-plank">0</b></div>
+    <div class="resource" data-item="seed"><span class="resource-icon seed"><i data-lucide="sprout"></i></span><span class="resource-name">بذور</span><b id="count-seed">5</b></div>
+    <div class="resource" data-item="crop"><span class="resource-icon crop"><i data-lucide="wheat"></i></span><span class="resource-name">حصاد</span><b id="count-crop">0</b></div>
+  </section>
+  <button class="location" id="overview" aria-label="تبديل نظرة عامة للوادي" title="نظرة عامة للوادي"><span class="compass-icon"><i data-lucide="compass"></i></span><div><b>وادي البدايات</b><small><span></span>نظرة عامة للوادي</small></div></button>
+  <aside class="quest-card"><div class="quest-top"><span class="little-label">حكايتك تبدأ هنا</span><span id="quest-progress">٠ / ٣</span></div><h2>كل كبير يبدأ بخطوة<span>✦</span></h2><div class="quest-list"><div class="quest" data-quest="crafted"><span class="quest-check"></span><span>اصنع أول لوح خشبي</span><kbd>01</kbd></div><div class="quest" data-quest="built"><span class="quest-check"></span><span>ابنِ ركنك الأول</span><kbd>02</kbd></div><div class="quest" data-quest="harvested"><span class="quest-check"></span><span>احصد ما زرعته</span><kbd>03</kbd></div></div><p class="current-quest" id="current-quest">اجمع خشبتين واصنع لوحًا</p><div class="progress-track"><span id="progress-fill"></span></div><p class="quest-footer">مش سباق… خُد وقتك.</p></aside>
+  <div class="world-caption" aria-hidden="true"><i data-lucide="sun"></i><span>هنا، يوم جديد ينتظرك.</span></div>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div id="build-controls" class="build-controls" hidden><div><span class="little-label">وضع البناء</span><b id="build-name">أرضية</b><small id="build-cost">لوحان + حجر</small></div><button id="cycle" class="small-button" aria-label="تغيير قطعة البناء"><i data-lucide="layers"></i><span>تغيير</span></button><button id="rotate" class="small-button" aria-label="تدوير قطعة البناء"><i data-lucide="rotate-cw"></i><span>تدوير</span></button><button id="cancel-build" class="small-button close-small" aria-label="إلغاء البناء"><i data-lucide="x"></i></button></div>
+  <div class="joystick-wrap"><div id="joystick" role="group" aria-label="عصا الحركة باللمس"><span class="stick-axis axis-x"></span><span class="stick-axis axis-y"></span><span id="stick-thumb"><i data-lucide="move"></i></span></div><span class="control-hint">اسحب للحركة <kbd>W A S D</kbd></span></div>
+  <div class="interaction"><div class="target-card"><span class="target-pip"></span><div><strong id="target-title">استكشف واحتك</strong><small id="target-detail">اقترب من شجرة، صخرة أو حوض زرع</small></div></div><button id="interact" class="action-button"><span id="action-icon"><i data-lucide="axe"></i></span><b id="action-label">تفاعل</b><kbd>E</kbd></button></div>
+  <nav class="dock" aria-label="أدوات اللعب"><button class="tool active" id="explore" aria-label="الاستكشاف"><i data-lucide="compass"></i><span>استكشف</span><kbd>1</kbd></button><button class="tool" id="build"><i data-lucide="hammer"></i><span>ابنِ</span><kbd>B</kbd></button><span class="dock-divider"></span><button class="tool" id="craft"><i data-lucide="axe"></i><span>اصنع</span><kbd>C</kbd></button><button class="tool" id="bag"><i data-lucide="backpack"></i><span>حقيبتي</span><kbd>I</kbd></button></nav>
+  <div class="save-status" id="save-status"><span></span>حفظ محلي تلقائي</div>
+  <div class="camera-hint"><i data-lucide="hand"></i><span>اسحب العالم لتلف الكاميرا</span></div>
+  <div class="modal-backdrop" id="modal" hidden><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><button class="modal-close icon-button" id="modal-close" aria-label="إغلاق"><i data-lucide="x"></i></button><div id="modal-content"></div></section></div>
+  <noscript><div class="fatal-message">تحتاج اللعبة تفعيل JavaScript في المتصفح.</div></noscript>
+  <script type="module" src="/web/main.js"></script>
+</body>
+</html>

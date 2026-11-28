@@ -1,0 +1,59 @@
+name: Game source and runtime checks
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  source:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements-dev.txt
+      - run: gdlint game/*.gd tests/*.gd
+      - run: gdformat --check game/*.gd tests/*.gd
+      - run: python -m unittest discover -s tests -p 'test_*.py' -v
+      - run: python scripts/package_project.py
+  godot:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download pinned Godot and check release checksum
+        env:
+          GODOT_VERSION: 4.4.1-stable
+        run: |
+          set -euo pipefail
+          BASE="https://github.com/godotengine/godot-builds/releases/download/${GODOT_VERSION}"
+          FILE="Godot_v${GODOT_VERSION}_linux.x86_64.zip"
+          curl -fsSL --retry 3 "$BASE/$FILE" -o "$RUNNER_TEMP/$FILE"
+          curl -fsSL --retry 3 "$BASE/SHA512-SUMS.txt" -o "$RUNNER_TEMP/SHA512-SUMS.txt"
+          cd "$RUNNER_TEMP"
+          grep " $FILE$" SHA512-SUMS.txt > engine-checksum.txt
+          sha512sum --check engine-checksum.txt
+          unzip "$FILE" -d godot-bin
+          chmod +x "godot-bin/Godot_v${GODOT_VERSION}_linux.x86_64"
+          echo "$RUNNER_TEMP/godot-bin" >> "$GITHUB_PATH"
+      - name: Import and statically compile scripts in the real engine
+        run: Godot_v4.4.1-stable_linux.x86_64 --headless --editor --path . --import
+      - name: Gameplay and persistence regression tests
+        run: Godot_v4.4.1-stable_linux.x86_64 --headless --path . --script tests/test_game.gd
+      - name: Scene and UI smoke test
+        run: Godot_v4.4.1-stable_linux.x86_64 --headless --path . --script tests/test_scene.gd
+  web:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run check:world
+      - run: npm test
+      - run: npm run build

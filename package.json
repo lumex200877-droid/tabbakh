@@ -1,0 +1,24 @@
+{
+  "name": "pocket-oasis-preview",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0",
+    "test": "node --test web/tests/*.test.js",
+    "test:browser": "node web/tests/browser.mjs",
+    "postinstall": "node scripts/setup_web.mjs",
+    "check:world": "python3 scripts/export_web_data.py --check"
+  },
+  "dependencies": {
+    "lucide": "^0.468.0",
+    "three": "^0.170.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.58.0",
+    "@sparticuz/chromium": "^133.0.0",
+    "vite": "^6.1.0"
+  }
+}
